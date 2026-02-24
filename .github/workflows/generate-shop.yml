@@ -1,1 +1,17 @@
+name: 🎵 Shop Simple
+on: [push, workflow_dispatch]
 
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Generate
+      run: |
+        node --version
+        ls -la
+        node generate-shop.js
+    
+    - name: Résultat
+      run
