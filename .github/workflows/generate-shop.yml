@@ -1,11 +1,11 @@
-name: Générer Boutique Musique
+name: 🎵 Générer Shop Musique
 on:
   push:
     paths:
       - 'assets/**'
       - 'template.html'
       - 'generate-shop.js'
-  workflow_dispatch:  # Bouton manuel dans GitHub
+  workflow_dispatch:
 
 jobs:
   generate:
@@ -19,14 +19,16 @@ jobs:
         node-version: 20
         cache: 'npm'
     
-    - name: Install & Generate
+    - name: Install dependencies
       run: |
-        npm ci
-        npm install tinytag
-        node generate-shop.js
+        npm init -y
+        npm install tinytag --save
+    
+    - name: Generate shop
+      run: node generate-shop.js
     
     - name: Commit index.html
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "🤖 Shop auto-généré (`${{ github.event.head_commit.message }}`)"
-        file_pattern: 'index.html'
+        commit_message: "🤖 Shop auto-généré"
+        file_pattern: index.html
