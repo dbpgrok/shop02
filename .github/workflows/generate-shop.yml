@@ -1,1 +1,28 @@
+name: 🎵 Shop Musique Auto
+on: [push, workflow_dispatch]  # TOUJOURS déclenché
 
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    
+    - name: Debug + Generate
+      run: |
+        echo "::group::Fichiers détectés"
+        ls -la
+        echo "::endgroup::"
+        echo "::group::Assets"
+        ls -la assets/ 2>/dev/null || echo "assets/ vide ou absent"
+        echo "::endgroup::"
+        node generate-shop.js
+        echo "::group::Résultat"
+        ls -la index.html
+        echo "TAIL index.html:"
+        tail -20 index.html
+        echo "::endgroup::"
