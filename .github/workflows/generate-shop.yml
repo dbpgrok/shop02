@@ -1,5 +1,11 @@
-name: 🎵 Shop Auto
-on: [push, workflow_dispatch]
+name: 🎵 Auto Shop Musique
+on:
+  push:
+    paths:
+      - 'assets/**'
+      - 'index.html'
+      - 'generate-shop.js'
+  workflow_dispatch:
 
 jobs:
   generate:
@@ -7,17 +13,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - uses: actions/setup-node@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: 20
     
-    - name: Build Shop
+    - name: Generate boutique
       run: |
-        npm init -y
+        ls -la
         node generate-shop.js
     
-    - name: Deploy
+    - name: Commit changements
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "🤖 Auto-generate"
+        commit_message: "🤖 Shop auto-généré"
         file_pattern: index.html
