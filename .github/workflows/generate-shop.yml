@@ -1,5 +1,11 @@
-name: 🎵 Shop Simple
-on: [push, workflow_dispatch]
+name: 🎵 Auto Shop Musique
+on:
+  push:
+    paths:
+      - 'assets/**'
+      - 'index.html'
+      - 'generate-shop.js'
+  workflow_dispatch:
 
 jobs:
   generate:
@@ -7,11 +13,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Generate
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    
+    - name: Generate boutique
       run: |
-        node --version
+        echo "Fichiers présents :"
         ls -la
         node generate-shop.js
-    
-    - name: Résultat
-      run
+        echo "Contenu final de index.html :"
+        ls -la index.html || echo "index.html manquant"
