@@ -1,11 +1,5 @@
-name: 🎵 Générer Shop Musique
-on:
-  push:
-    paths:
-      - 'assets/**'
-      - 'template.html'
-      - 'generate-shop.js'
-  workflow_dispatch:
+name: 🎵 Shop Auto
+on: [push, workflow_dispatch]
 
 jobs:
   generate:
@@ -13,22 +7,22 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup Node.js
+    - name: Setup Node
       uses: actions/setup-node@v4
       with:
         node-version: 20
-        cache: 'npm'
+        cache: 'off'  # ← FIX CACHE
     
-    - name: Install dependencies
+    - name: Generate Shop
       run: |
         npm init -y
-        npm install tinytag --save
+        npm config set cache /tmp/.npm
+        npm install tinytag --no-save
+        ls -la assets/ || mkdir assets
+        node generate-shop.js
     
-    - name: Generate shop
-      run: node generate-shop.js
-    
-    - name: Commit index.html
+    - name: Deploy
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "🤖 Shop auto-généré"
-        file_pattern: index.html
+        commit_message: "🤖 Generated"
+        file_pattern: '*.html'
