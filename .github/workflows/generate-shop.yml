@@ -7,22 +7,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup Node
-      uses: actions/setup-node@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: 20
-        cache: 'off'  # ← FIX CACHE
     
-    - name: Generate Shop
+    - name: Build Shop
       run: |
         npm init -y
-        npm config set cache /tmp/.npm
-        npm install tinytag --no-save
-        ls -la assets/ || mkdir assets
         node generate-shop.js
     
     - name: Deploy
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "🤖 Generated"
-        file_pattern: '*.html'
+        commit_message: "🤖 Auto-generate"
+        file_pattern: index.html
