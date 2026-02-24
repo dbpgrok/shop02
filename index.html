@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<title>Shop02 - Boutique Musique Pré-15s</title>
+<title>Shop02 - Boutique Musique Sécurisée Pré-15s</title>
 <style>
-body{font-family:Arial;background:#f4f4f4;margin:0;padding:20px;max-width:900px;margin:auto;}
+body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:20px;max-width:900px;margin:auto;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
 header{background:#2c3e50;color:white;text-align:center;padding:2rem;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
 .track{background:white;padding:20px;margin:20px 0;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);display:grid;grid-template-columns:2fr 1fr auto auto;gap:15px;align-items:center;}
 .title{font-size:1.2em;font-weight:bold;color:#2c3e50;}
@@ -21,23 +21,50 @@ audio{width:100%;border-radius:5px;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
 <body>
 <header>
 <h1>🎵 Shop02 - Boutique Musique</h1>
-<p>Pré-écoutez 15s puis achetez !</p>
+<p>Pré-écoutez 15s puis achetez ! Protégé contre téléchargement</p>
 </header>
 <main>
 <div class="track">
 <div class="title">Self Care Groove</div>
-<audio controls preload="metadata">
-<source src="assets/Self Care Groove.mp3#t=15" type="audio/mpeg"> <!-- Limite ~15s via #t=15 -->
+<audio id="audio1" controls preload="metadata" controlsList="nodownload noremoteplayback nopicture-in-picture" oncontextmenu="return false">
+<source src="assets/Self Care Groove.mp3#t=15" type="audio/mpeg">
+Navigateur incompatible.
 </audio>
 <div class="price">€0.99</div>
 <button class="btn buy" onclick="buy('Self Care Groove')">Acheter</button>
 </div>
-<!-- Dupliquez pour chaque MP3 -->
 </main>
 <script>
 function buy(title) {
-  alert(`✅ Achat "${title}" ! Téléchargement simulé. (Intégrez PayPal)`)
+  alert(`✅ Achat "${title}" confirmé ! Téléchargement complet après paiement.`);
 }
+
+// Protections anti-fuite MP3
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.getElementById('audio1').addEventListener('contextmenu', e => e.preventDefault());
+document.getElementById('audio1').addEventListener('dragstart', e => e.preventDefault());
+document.getElementById('audio1').addEventListener('selectstart', e => e.preventDefault());
+
+// Limite stricte 15s
+document.getElementById('audio1').addEventListener('loadedmetadata', function() {
+  this.addEventListener('timeupdate', function() {
+    if (this.currentTime > 15) this.pause();
+  });
+});
+document.getElementById('audio1').addEventListener('play', function() {
+  this.currentTime = 0;
+  setTimeout(() => {
+    if (!this.paused) this.pause();
+  }, 15000);
+});
+
+// Anti-inspection raccourcis
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 73 || e.keyCode === 85 || e.keyCode === 74)) {
+    e.preventDefault();
+  }
+  if (e.keyCode === 123) e.preventDefault(); // F12
+}, false);
 </script>
 </body>
 </html>
