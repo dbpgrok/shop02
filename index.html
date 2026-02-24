@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Shop02 - Boutique Musique Pré-15s</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;margin:0;padding:20px;max-width:900px;margin:auto;}
+header{background:#2c3e50;color:white;text-align:center;padding:2rem;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.track{background:white;padding:20px;margin:20px 0;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);display:grid;grid-template-columns:2fr 1fr auto auto;gap:15px;align-items:center;}
+.title{font-size:1.2em;font-weight:bold;color:#2c3e50;}
+.price{color:#27ae60;font-size:1.1em;font-weight:bold;}
+audio{width:100%;border-radius:5px;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.btn{padding:10px 20px;background:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;transition:background 0.3s;}
+.btn:hover{background:#2980b9;}
+.buy{background:#e74c3c;}
+.buy:hover{background:#c0392b;}
+@media (max-width:600px){.track{grid-template-columns:1fr 100px;}}
+</style>
+</head>
+<body>
+<header>
+<h1>🎵 Shop02 - Boutique Musique</h1>
+<p>Pré-écoutez 15s puis achetez !</p>
+</header>
+<main>
+<div class="track">
+<div class="title">Self Care Groove</div>
+<audio controls preload="metadata">
+<source src="assets/track1.mp3#t=15" type="audio/mpeg"> <!-- Limite ~15s via #t=15 -->
+</audio>
+<div class="price">€0.99</div>
+<button class="btn buy" onclick="buy('Track 1')">Acheter</button>
+</div>
+<!-- Dupliquez pour chaque MP3 -->
+</main>
+<script>
+function buy(title) {
+  alert(`✅ Achat "${title}" ! Téléchargement simulé. (Intégrez Stripe)`)
+}
+</script>
+</body>
+</html>
