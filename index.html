@@ -32,10 +32,11 @@ audio{width:100%;height:50px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0
 <p class="subtitle">Pré-écoutez 30 secondes en haute qualité • Achetez instantanément • 🔒 Ultra-sécurisé</p>
 </header>
 <main>
+<!-- Track 1: Hamsterrad-Revolte.mp3 -->
 <div class="track">
-<img src="https://via.placeholder.com/120x120/e6b800/ffffff?text=Cover" alt="Cover Self Care Groove" class="cover">
+<img src="https://via.placeholder.com/250x250/e6b800/ffffff?text=Hamsterr..." alt="Cover Hamsterrad Revolte" class="cover">
 <div>
-<h2 class="title">Self Care Groove</h2>
+<h2 class="title">Hamsterrad Revolte</h2>
 <p class="artist">AI101MUSIC • Single 2026</p>
 </div>
 <div id="audio-container1" style="display:none;">
@@ -46,15 +47,70 @@ audio{width:100%;height:50px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0
 </div>
 <div class="price">€0.79</div>
 <button class="btn play-btn" id="playBtn1" onclick="playPreview('1')">▶️ Écouter 30s</button>
+<button class="btn buy" onclick="buy('Hamsterrad Revolte')">💳 Acheter</button>
+</div>
+
+<!-- Track 2: Self Care Groove.mp3 -->
+<div class="track">
+<img src="https://via.placeholder.com/250x250/e6b800/ffffff?text=Self Car..." alt="Cover Self Care Groove" class="cover">
+<div>
+<h2 class="title">Self Care Groove</h2>
+<p class="artist">AI101MUSIC • Single 2026</p>
+</div>
+<div id="audio-container2" style="display:none;">
+    <div class="loading" id="loading2">🔄 Chargement sécurisé de la pré-écoute...</div>
+    <audio id="audio2" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+</div>
+<div class="price">€0.79</div>
+<button class="btn play-btn" id="playBtn2" onclick="playPreview('2')">▶️ Écouter 30s</button>
 <button class="btn buy" onclick="buy('Self Care Groove')">💳 Acheter</button>
 </div>
-<!-- DUPLIQUEZ ce bloc pour chaque nouveau titre (changez les IDs: audio-container2, audio2, etc.) -->
+
+<!-- Track 3: The Hope Wins.mp3 -->
+<div class="track">
+<img src="https://via.placeholder.com/250x250/e6b800/ffffff?text=The Hope..." alt="Cover The Hope Wins" class="cover">
+<div>
+<h2 class="title">The Hope Wins</h2>
+<p class="artist">AI101MUSIC • Single 2026</p>
+</div>
+<div id="audio-container3" style="display:none;">
+    <div class="loading" id="loading3">🔄 Chargement sécurisé de la pré-écoute...</div>
+    <audio id="audio3" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+</div>
+<div class="price">€0.79</div>
+<button class="btn play-btn" id="playBtn3" onclick="playPreview('3')">▶️ Écouter 30s</button>
+<button class="btn buy" onclick="buy('The Hope Wins')">💳 Acheter</button>
+</div>
+
+<!-- Track 4: trk3.mp3 -->
+<div class="track">
+<img src="https://via.placeholder.com/250x250/e6b800/ffffff?text=trk3" alt="Cover trk3" class="cover">
+<div>
+<h2 class="title">trk3</h2>
+<p class="artist">AI101MUSIC • Single 2026</p>
+</div>
+<div id="audio-container4" style="display:none;">
+    <div class="loading" id="loading4">🔄 Chargement sécurisé de la pré-écoute...</div>
+    <audio id="audio4" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+</div>
+<div class="price">€0.79</div>
+<button class="btn play-btn" id="playBtn4" onclick="playPreview('4')">▶️ Écouter 30s</button>
+<button class="btn buy" onclick="buy('trk3')">💳 Acheter</button>
+</div>
 </main>
 <script>
 let audioBlobs = {}; // Stockage des Blobs par ID
+const mp3Files = ['Hamsterrad-Revolte.mp3', 'Self Care Groove.mp3', 'The Hope Wins.mp3', 'trk3.mp3'];
 
 // Chargement sécurisé du Blob au premier clic
 async function loadSecurePreview(trackId) {
+    const id = parseInt(trackId);
     const container = document.getElementById(`audio-container${trackId}`);
     const loading = document.getElementById(`loading${trackId}`);
     const audio = document.getElementById(`audio${trackId}`);
@@ -67,8 +123,8 @@ async function loadSecurePreview(trackId) {
     playBtn.textContent = '🔄 Chargement...';
     
     try {
-        // Remplacez par VOTRE URL MP3 (accessible depuis le serveur)
-        const response = await fetch('assets/Self Care Groove.mp3');
+        const mp3Path = `assets/${mp3Files[id - 1]}`;
+        const response = await fetch(mp3Path);
         if (!response.ok) throw new Error('Erreur chargement');
         
         const arrayBuffer = await response.arrayBuffer();
@@ -135,17 +191,26 @@ function setupAudioLimits(audio) {
     });
 }
 
-// Initialisation pour tous les audios
+// Initialisation pour TOUS les audios
 document.addEventListener('DOMContentLoaded', function() {
     setupAudioLimits(document.getElementById('audio1'));
+    setupAudioLimits(document.getElementById('audio2'));
+    setupAudioLimits(document.getElementById('audio3'));
+    setupAudioLimits(document.getElementById('audio4'));
     
     // TOUTES les protections anti-fuite conservées
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('dragstart', e => e.preventDefault());
     document.addEventListener('selectstart', e => e.preventDefault());
     
-    document.getElementById('audio1').addEventListener('contextmenu', e => e.preventDefault());
-    document.getElementById('audio1').addEventListener('dragstart', e => e.preventDefault());
+    // Anti-contextmenu/drag sur tous les audios
+    ['audio1', 'audio2', 'audio3', 'audio4'].forEach(id => {
+        const audio = document.getElementById(id);
+        if (audio) {
+            audio.addEventListener('contextmenu', e => e.preventDefault());
+            audio.addEventListener('dragstart', e => e.preventDefault());
+        }
+    });
     
     // Anti-inspection renforcé
     document.addEventListener('keydown', e => {
