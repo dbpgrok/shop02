@@ -165,13 +165,38 @@ function buy(title) {
 // Init
 document.addEventListener('DOMContentLoaded', () => {
   ['audio1','audio2','audio3','audio4','audio5','audio6'].forEach(setupAudioLimits);
-  // Anti-fuite
-  document.addEventListener('contextmenu', e => e.preventDefault());
-  document.addEventListener('dragstart', e => e.preventDefault());
-  document.addEventListener('keydown', e => {
-    if(e.ctrlKey && (e.key==='u'||e.key==='s'||e.key==='i')) e.preventDefault();
-    if(e.key==='F12') e.preventDefault();
-  }, true);
+ // 🔒 Anti-clic droit / inspect / DevTools ULTRA (remplace ancienne section)
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if(e.key==='F12' || (e.ctrlKey && e.shiftKey && e.key==='I') || 
+     (e.ctrlKey && (e.key==='u' || e.key==='s' || e.key==='i')) ||
+     (e.ctrlKey && e.altKey && e.key==='I') || e.key==='F5' || (e.ctrlKey && e.key==='r')) {
+    e.preventDefault(); e.stopPropagation(); return false;
+  }
+}, true);
+document.addEventListener('selectstart', e => e.preventDefault());
+document.addEventListener('dragstart', e => e.preventDefault());
+
+// Détection DevTools (redirection forcée)
+let devtoolsOpen = false;
+setInterval(() => {
+  const w = window.outerWidth - window.innerWidth;
+  const h = window.outerHeight - window.innerHeight;
+  if(w > 100 || h > 100) {
+    if(!devtoolsOpen) {
+      document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:Arial;color:#e74c3c;font-size:24px;">🔒 Outils dev détectés - Page protégée<br><button onclick="location.reload()" style="margin-top:20px;padding:10px;background:#27ae60;color:white;border:none;border-radius:5px;">Recharger</button></div>';
+      devtoolsOpen = true;
+    }
+  } else devtoolsOpen = false;
+}, 500);
+
+// Anti-console + audios
+const origLog = console.log; console.log = () => {};
+['audio1','audio2','audio3','audio4','audio5','audio6'].forEach(id => {
+  const audio = document.getElementById(id);
+  if(audio) { audio.ondragstart = () => false; audio.oncontextmenu = () => false; }
+});
+
 });
 </script>
 </body>
