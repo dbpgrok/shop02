@@ -49,54 +49,58 @@ audio{width:100%;height:50px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0
 </div>
 <div class="price">€0.79</div>
 <button class="btn play-btn" id="playBtn1" onclick="playPreview('1')">▶️ Écouter 30s</button>
-<!-- Dans chaque <div class="track">, remplace le bouton buy par: -->
-<div class="buy-container">
-    <button class="btn buy" onclick="buySolana('Hamsterrad Revolte', '1')">🪙 Acheter SOL</button>
-    <div id="paypal-button-container1"></div> <!-- Optionnel PayPal futur -->
-</div>
 
-<!-- Dans <script>, remplace buy() par: -->
-async function buySolana(trackTitle, trackId) {
-    const recipient = '6t6pLZ22wnbPSnUvBzv9ZRxVK5q7CSTXDE5LjHcQaaAs'; // Remplace!
-    const amountSol = 0.002; // ~€0.79 (ajuste via oracle prix SOL/EUR)
-    const reference = `shop02_${Date.now()}_${trackId}_${Math.random().toString(36).slice(2)}`;
+async function buyProKYC(trackTitle, trackId) {
+    // KYC partiel d'abord
+    const email = prompt('📧 Email pour recevoir lien download:');
+    if (!email || !email.includes('@')) return alert('❌ Email requis');
     
-    // 1. Enregistre order côté serveur
+    const pseudo = prompt('👤 Pseudo (optionnel):') || 'Anonyme';
+    
+    // === PAIEMENT ===
+    const WALLET_RECIPIENT = '6t6pLZ22wnbPSnUvBzv9ZRxVK5q7CSTXDE5LjHcQaaAs';  // Ton wallet
+    const AMOUNT_SOL = 0.005;
+    const reference = `kyc_${trackId}_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+    
+    const solanaPayUrl = `solana:${WALLET_RECIPIENT}?` +
+        `amount=${AMOUNT_SOL}&label=Shop02-KYC-${trackTitle}&` +
+        `message=0.005+SOL+Full+track&reference=${reference}&` +
+        `memo=KYC_${trackTitle.replace(/ /g,'_')}`;
+    
+    // Enregistre commande + KYC
     try {
-        const orderRes = await fetch('/api/solana/create-order', {
+        const orderRes = await fetch('https://ton-backend.onrender.com/api/order/create', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ reference, trackTitle, trackId, amountSol, recipient })
+            body: JSON.stringify({
+                reference, trackTitle, trackId, email, pseudo,
+                amountSol: AMOUNT_SOL, status: 'kyc_pending'
+            })
         });
         const order = await orderRes.json();
         
-        // 2. Génère Solana Pay URL
-        const solanaPayUrl = `solana:${recipient}?amount=${amountSol}&label=Shop02-${trackTitle}&message=Full+track+€0.79&reference=${reference}&memo=SHOP02_${trackTitle.replace(/ /g,'_')}`;
-        
-        // 3. Auto-ouvre wallet ou QR
-        if (navigator.userAgent.includes('Phantom') || navigator.userAgent.includes('Solflare')) {
-            window.location.href = solanaPayUrl;
-        } else {
-            // QR + lien web
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(solanaPayUrl)}`;
-            const modal = `
-                <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;">
-                    <h3>💰 Payer ${amountSol} SOL pour "${trackTitle}"</h3>
-                    <img src="${qrUrl}" alt="QR Solana Pay">
-                    <p><a href="${solanaPayUrl}" target="_blank" style="color:#00ff88;">🔗 Ouvrir Solana Pay</a></p>
-                    <button onclick="this.parentElement.remove()" style="margin-top:20px;">Fermer</button>
-                    <p><small>⏳ Surveillance auto... lien download dans 30s max</small></p>
-                </div>`;
-            document.body.insertAdjacentHTML('beforeend', modal);
-        }
-        
-        alert(`✅ Order créé #${order.orderId}\nPaye ${amountSol} SOL et reçois ton lien auto!`);
+        // Modal QR
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(solanaPayUrl)}`;
+        document.body.insertAdjacentHTML('beforeend', `
+        <div id="paymentModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;padding:20px;text-align:center;">
+            <h2>✅ KYC enregistré: ${email}</h2>
+            <div style="background:#fff;padding:20px;border-radius:20px;margin:20px 0;box-shadow:0 20px 40px rgba(0,0,0,0.5);">
+                <img src="${qrUrl}" style="width:300px;height:300px;border-radius:15px;">
+            </div>
+            <div>
+                <p><strong>💰 Payer exactement 0.005 SOL</strong></p>
+                <p><a href="${solanaPayUrl}" target="_blank" style="color:#00ff88;font-size:1.2em;">🔗 Solana Pay</a></p>
+                <p style="opacity:0.8;">📝 Ref: ${order.orderId.slice(0,15)}... | ⏳ Lien auto dans 30s</p>
+            </div>
+            <button onclick="this.parentElement.remove()" style="margin-top:20px;padding:12px 24px;background:#27ae60;color:white;border:none;border-radius:20px;font-size:1em;cursor:pointer;">Fermer</button>
+        </div>`);
         
     } catch(e) {
-        alert('❌ Erreur création order: ' + e.message);
+        alert('❌ Backend indisponible: ' + e.message);
     }
 }
-
+    
+    
 </div>
 
 <!-- Track 2: Self Care Groove.mp3 -->
