@@ -143,70 +143,65 @@ audio{width:100%;height:50px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0
 </div>    
 </main>
 <script>
-let audioBlobs = {}; // Stockage des Blobs par ID
-let currentPlayingTrack = null; // Track actuellement en lecture
+let audioBlobs = {}; 
+let currentPlayingTrack = null;
 const mp3Files = ['Hamsterrad-Revolte.mp3', 'Self Care Groove.mp3', 'The Hope Wins.mp3', 'trk3.mp3', 'Sebene2.mp3', 'Al Dogma.mp3'];
 
-// Arrête TOUS les autres players + reset visuel
+// 🔒 STOP TOUS + reset visuel (AVANT load)
 function stopAllOthers(newTrackId) {
-    for (let i = 1; i <= 4; i++) {
-        if (i.toString() !== newTrackId) {
-            const audio = document.getElementById(`audio${i}`);
-            const trackDiv = document.querySelector(`[data-track="${i}"]`);
-            const playBtn = document.getElementById(`playBtn${i}`);
+  for(let i=1;i<=6;i++) {
+    if(i.toString()!==newTrackId) {
+      const audio = document.getElementById(`audio${i}`);
+      const trackDiv = document.querySelector(`[data-track="${i}"]`);
+      const playBtn = document.getElementById(`playBtn${i}`);
+      const loading = document.getElementById(`loading${i}`);
             
-            if (audio) {
-                audio.pause();
-                audio.currentTime = 0;
-            }
-            if (trackDiv) trackDiv.classList.remove('active');
-            if (playBtn) {
-                playBtn.classList.remove('active');
-                playBtn.textContent = '▶️ Écouter 30s';
-            }
-        }
+            if(audio) {
+        audio.pause();
+        audio.currentTime = 0;
+        if(audio._timer) clearInterval(audio._timer);
+      }
+      if(trackDiv) trackDiv.classList.remove('active');
+      if(playBtn) {
+        playBtn.classList.remove('active');
+        playBtn.textContent = '▶️ Écouter 30s';
+        playBtn.disabled = false;
+      }
+      if(loading) loading.style.display = 'none';
     }
+  }
+  currentPlayingTrack = null;
 }
 
-// Met à jour visuel du track actif
+
+// Active visuel UNIQUEMENT
 function setActiveTrack(trackId) {
-    const trackDiv = document.querySelector(`[data-track="${trackId}"]`);
-    const playBtn = document.getElementById(`playBtn${trackId}`);
-    
-    // Reset tous
-    document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.play-btn').forEach(b => b.classList.remove('active'));
-    
-    // Active le nouveau
-    if (trackDiv) trackDiv.classList.add('active');
-    if (playBtn) {
-        playBtn.classList.add('active');
-        playBtn.textContent = '⏸️ En cours...';
-    }
-    
-    currentPlayingTrack = trackId;
+  stopAllOthers(trackId); // Force stop avant
+  const trackDiv = document.querySelector(`[data-track="${trackId}"]`);
+  const playBtn = document.getElementById(`playBtn${trackId}`);
+  if(trackDiv) trackDiv.classList.add('active');
+  if(playBtn) {
+    playBtn.classList.add('active');
+    playBtn.textContent = '⏸️ En cours...';
+  }
+  currentPlayingTrack = trackId;
 }
 
-// Chargement sécurisé du Blob au premier clic
+// Load Blob (un seul)
 async function loadSecurePreview(trackId) {
-    const id = parseInt(trackId);
-    const container = document.getElementById(`audio-container${trackId}`);
-    const loading = document.getElementById(`loading${trackId}`);
-    const audio = document.getElementById(`audio${trackId}`);
-    const playBtn = document.getElementById(`playBtn${trackId}`);
-    
-    if (audioBlobs[trackId]) return; // Déjà chargé
-    
-    loading.style.display = 'block';
-    playBtn.disabled = true;
-    playBtn.textContent = '🔄 Chargement...';
-    
-    try {
-        const mp3Path = `assets/${mp3Files[id - 1]}`;
-        const response = await fetch(mp3Path);
-        if (!response.ok) throw new Error('Erreur chargement');
-        
-        const arrayBuffer = await response.arrayBuffer();
+  const audio = document.getElementById(`audio${trackId}`);
+  const loading = document.getElementById(`loading${trackId}`);
+  const playBtn = document.getElementById(`playBtn${trackId}`);
+  
+  if(audioBlobs[trackId]) return audioBlobs[trackId]; 
+  
+  loading.style.display = 'block';
+  playBtn.disabled = true;
+  
+  try {
+    const mp3Path = `assets/${mp3Files[parseInt(trackId)-1]}`;
+    const response = await fetch(mp3Path);
+    const arrayBuffer = await response.arrayBuffer();
         const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
         const blobUrl = URL.createObjectURL(blob);
         
