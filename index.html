@@ -298,13 +298,15 @@ document.addEventListener('DOMContentLoaded', function() {
     setupAudioLimits(document.getElementById('audio2'));
     setupAudioLimits(document.getElementById('audio3'));
     setupAudioLimits(document.getElementById('audio4'));
+    setupAudioLimits(document.getElementById('audio5'));
+    setupAudioLimits(document.getElementById('audio6'));
     
     // Protections anti-fuite
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('dragstart', e => e.preventDefault());
     document.addEventListener('selectstart', e => e.preventDefault());
     
-    ['audio1', 'audio2', 'audio3', 'audio4'].forEach(id => {
+    ['audio1', 'audio2', 'audio3', 'audio4', 'audio5', 'audio6'].forEach(id => {
         const audio = document.getElementById(id);
         if (audio) {
             audio.addEventListener('contextmenu', e => e.preventDefault());
