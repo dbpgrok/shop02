@@ -124,6 +124,24 @@ audio{width:100%;height:50px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0
 <button class="btn buy" onclick="buy('Al Dogma')">💳 Acheter</button>
 </div>
 
+<!-- Track 6: Sebene2.mp3 -->
+<div class="track" data-track="6">
+<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0006.jpg" alt="Cover Sebene2" class="cover" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg==';this.alt='Fallback Cover';">
+<div>
+<h2 class="title">Sebene2</h2>
+<p class="artist">AI101MUSIC • Single 2026</p>
+</div>
+<div id="audio-container6" style="display:none;">
+    <div class="loading" id="loading6">🔄 Chargement sécurisé de la pré-écoute...</div>
+    <audio id="audio6" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+</div>
+<div class="price">€0.79</div>
+<button class="btn play-btn" id="playBtn6" onclick="playPreview('6')">▶️ Écouter 30s</button>
+<button class="btn buy" onclick="buy('Sebene2')">💳 Acheter</button>
+</div>
+    
 </main>
 <script>
 let audioBlobs = {}; // Stockage des Blobs par ID
@@ -132,7 +150,7 @@ const mp3Files = ['Hamsterrad-Revolte.mp3', 'Self Care Groove.mp3', 'The Hope Wi
 
 // Arrête TOUS les autres players + reset visuel
 function stopAllOthers(newTrackId) {
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 6; i++) {
         if (i.toString() !== newTrackId) {
             const audio = document.getElementById(`audio${i}`);
             const trackDiv = document.querySelector(`[data-track="${i}"]`);
