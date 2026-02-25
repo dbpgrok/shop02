@@ -1,7 +1,7 @@
 name: 🎵 Auto-Generate Shop
 on:
   push:
-    paths: ['assets/**', 'auto-shop.js', 'index.html', 'template.html']
+    paths: ['assets/**', 'auto-shop.js', 'index.html']
   workflow_dispatch:  # Bouton manuel "Build Shop"
 
 jobs:
