@@ -1,0 +1,22 @@
+name: 🎵 Auto-Generate Shop
+on:
+  push:
+    paths: ['assets/**', 'auto-shop.js', 'index.html', 'template.html']
+  workflow_dispatch:  # Bouton manuel "Build Shop"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci --only=dev
+      - run: npm run generate
+      - run: ls -la index.html assets/*.mp3 || echo 'Aucun MP3'
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🤖 Auto-generate shop ({{ github.event.head_commit.message }})"
+          file_pattern: ['index.html', 'index.backup.html']
