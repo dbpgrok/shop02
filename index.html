@@ -49,7 +49,11 @@ audio{width:100%;height:50px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0
 </div>
 <div class="price">€0.79</div>
 <button class="btn play-btn" id="playBtn1" onclick="playPreview('1')">▶️ Écouter 30s</button>
-<button class="btn buy" onclick="buy('Hamsterrad Revolte')">💳 Acheter</button>
+<button class="btn buy" onclick="buyProKYC('Hamsterrad Revolte','1')">🪙 0.005 SOL + KYC</button>
+<script>
+async function buyProKYC(t,i){const e=prompt('📧 Email:');if(!e||!e.includes('@'))return alert('❌ Email');const p=prompt('👤 Pseudo:')||'Anonyme',w='6t6pLZ22wnbPSnUvBzv9ZRxVK5q7CSTXDE5LjHcQaaAs',s=0.005,r=`kyc_${i}_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,u=`solana:${w}?amount=${s}&label=Shop02-${t}&message=0.005SOL+Full&reference=${r}&memo=KYC_${t.replace(/ /g,'_')}`;try{const o=await fetch('https://shop02-kyc-backend.onrender.com/api/order/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reference:r,trackTitle:t,trackId:i,email:e,pseudo:p,amountSol:s,status:'kyc_pending'})});await o.json();const q=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(u)}`;document.body.insertAdjacentHTML('beforeend',`<div id=paymentModal style=position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:20px;text-align:center;font-family:Arial><h2>✅ KYC: ${e}</h2><div style=background:#fff;padding:20px;border-radius:20px;margin:20px 0;box-shadow:0 20px 40px rgba(0,0,0,.5)><img src=${q} style=width:300px;height:300px;border-radius:15px></div><p><strong>💰 0.005 SOL exact</strong></p><p><a href=${u} target=_blank style=color:#00ff88;font-size:1.2em>🔗 Solana Pay</a></p><p style=opacity:.8>📝 Ref: ${r.slice(0,15)}... | ⏳ Lien 30s</p><button onclick=this.parentElement.remove() style=margin-top:20px;padding:12px 24px;background:#27ae60;color:#fff;border:none;border-radius:20px;font-size:1em;cursor:pointer>Fermer</button></div>`)}catch(x){alert('❌ Backend: '+x)}}
+</script>
+
 
     
     
