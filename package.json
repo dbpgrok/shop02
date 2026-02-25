@@ -1,1 +1,31 @@
+{
+  "name": "shop02",
+  "version": "1.0.1",
+  "description": "Boutique musique sécurisée - Auto-génère tracks/covers 150x150 depuis assets/",
+  "main": "auto-shop.js",
+  "scripts": {
+    "generate": "node auto-shop.js",
+    "watch": "nodemon --watch assets --watch index.html --ext js,html,json auto-shop.js",
+    "dev": "npm run watch",
+    "test": "npm run generate && echo '✅ Génération OK' && ls -la assets/*.mp3 2>/dev/null | wc -l | xargs echo 'MP3 trouvés:' || echo 'ℹ️ Aucun MP3'",
+    "preview": "npm run generate && live-server . --port=8080 --host=0.0.0.0 --open=index.html",
+    "build": "npm run generate && echo 'index.html prêt pour GitHub Pages'",
+    "deploy": "npm run build && git add index.html assets/ && git commit -m 'Auto-deploy shop [$(date)]' && git push"
+  },
+  "keywords": ["music", "shop", "mp3", "github-pages", "covers"],
+  "author": "AI101MUSIC",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbpgrok/shop02.git"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "live-server": "^1.2.3",
+    "chokidar": "^3.6.0"
+  }
+}
 
