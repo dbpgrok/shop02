@@ -1,8 +1,11 @@
- [<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
+<!-- 🔒 CSP renforcé : self + raw GH + blob/data pour audio/images -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://raw.githubusercontent.com data: blob:; media-src 'self' https://raw.githubusercontent.com blob: data:; script-src 'self'; style-src 'self' 'unsafe-inline';">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 <title>Shop02 - Boutique Musique Sécurisée Pré-30s PRO</title>
 <style>
 body{font-family:'Arial',sans-serif;background:linear-gradient(135deg,#f4f4f4,#e8e8e8);margin:0;padding:20px;max-width:1200px;margin:auto;box-sizing:border-box;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
@@ -31,265 +34,146 @@ audio{width:100%;height:50px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0
 <body>
 <header>
 <h1>🎵 Shop02 Boutique Musique</h1>
-<p class="subtitle">Pré-écoutez 30 secondes en haute qualité • Achetez instantanément • 🔒 Ultra-sécurisé<br><small>🎧 Un seul lecteur à la fois</small></p>
+<p class="subtitle">Pré-écoutez 30 secondes en haute qualité • Achetez instantanément • 🔒 Ultra-sécurisé<br><small>🎧 Un seul lecteur à la fois • Images optimisées & sécurisées</small></p>
 </header>
 <main>
 <!-- Track 1: Hamsterrad-Revolte.mp3 -->
 <div class="track" data-track="1">
-<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0001.jpg" 
-     alt="Cover Hamsterrad Revolte" 
-     class="cover" 
-     loading="lazy" 
-     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg=='; this.alt='Fallback Cover';">
-<div>
-<h2 class="title">Hamsterrad Revolte</h2>
-<p class="artist">AI101MUSIC • Single 2026</p>
-</div>
-<div id="audio-container1" style="display:none;">
-    <div class="loading" id="loading1">🔄 Chargement sécurisé de la pré-écoute...</div>
-    <audio id="audio1" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
-        Votre navigateur ne supporte pas l'audio.
-    </audio>
-</div>
-<div class="price">€0.79</div>
-<button class="btn play-btn" id="playBtn1" onclick="playPreview('1')">▶️ Écouter 30s</button>
-<button class="btn buy" onclick="buy('Hamsterrad Revolte')">💳 Acheter</button>
+<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0001.jpg" alt="Cover Hamsterrad Revolte" class="cover" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg==';this.alt='Fallback Cover';">
+<div><h2 class="title">Hamsterrad Revolte</h2><p class="artist">AI101MUSIC • Single 2026</p></div>
+<div id="audio-container1" style="display:none;"><div class="loading" id="loading1">🔄 Chargement sécurisé...</div><audio id="audio1" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">Votre navigateur ne supporte pas l'audio.</audio></div>
+<div class="price">€0.79</div><button class="btn play-btn" id="playBtn1" onclick="playPreview('1')">▶️ Écouter 30s</button><button class="btn buy" onclick="buy('Hamsterrad Revolte')">💳 Acheter</button>
 </div>
 
 <!-- Track 2: Self Care Groove.mp3 -->
 <div class="track" data-track="2">
-<img src="https://github.com/dbpgrok/shop02/blob/main/assets/0002.jpg" alt="Cover Self Care Groove" class="cover">
-<div>
-<h2 class="title">Self Care Groove</h2>
-<p class="artist">AI101MUSIC • Single 2026</p>
-</div>
-<div id="audio-container2" style="display:none;">
-    <div class="loading" id="loading2">🔄 Chargement sécurisé de la pré-écoute...</div>
-    <audio id="audio2" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
-        Votre navigateur ne supporte pas l'audio.
-    </audio>
-</div>
-<div class="price">€0.79</div>
-<button class="btn play-btn" id="playBtn2" onclick="playPreview('2')">▶️ Écouter 30s</button>
-<button class="btn buy" onclick="buy('Self Care Groove')">💳 Acheter</button>
+<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0002.jpg" alt="Cover Self Care Groove" class="cover" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg==';this.alt='Fallback Cover';">
+<div><h2 class="title">Self Care Groove</h2><p class="artist">AI101MUSIC • Single 2026</p></div>
+<div id="audio-container2" style="display:none;"><div class="loading" id="loading2">🔄 Chargement sécurisé...</div><audio id="audio2" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">Votre navigateur ne supporte pas l'audio.</audio></div>
+<div class="price">€0.79</div><button class="btn play-btn" id="playBtn2" onclick="playPreview('2')">▶️ Écouter 30s</button><button class="btn buy" onclick="buy('Self Care Groove')">💳 Acheter</button>
 </div>
 
 <!-- Track 3: The Hope Wins.mp3 -->
 <div class="track" data-track="3">
-<img src="https://github.com/dbpgrok/shop02/blob/main/assets/0003.jpg" alt="Cover The Hope Wins" class="cover">
-<div>
-<h2 class="title">The Hope Wins</h2>
-<p class="artist">AI101MUSIC • Single 2026</p>
-</div>
-<div id="audio-container3" style="display:none;">
-    <div class="loading" id="loading3">🔄 Chargement sécurisé de la pré-écoute...</div>
-    <audio id="audio3" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
-        Votre navigateur ne supporte pas l'audio.
-    </audio>
-</div>
-<div class="price">€0.79</div>
-<button class="btn play-btn" id="playBtn3" onclick="playPreview('3')">▶️ Écouter 30s</button>
-<button class="btn buy" onclick="buy('The Hope Wins')">💳 Acheter</button>
+<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0003.jpg" alt="Cover The Hope Wins" class="cover" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg==';this.alt='Fallback Cover';">
+<div><h2 class="title">The Hope Wins</h2><p class="artist">AI101MUSIC • Single 2026</p></div>
+<div id="audio-container3" style="display:none;"><div class="loading" id="loading3">🔄 Chargement sécurisé...</div><audio id="audio3" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">Votre navigateur ne supporte pas l'audio.</audio></div>
+<div class="price">€0.79</div><button class="btn play-btn" id="playBtn3" onclick="playPreview('2')">▶️ Écouter 30s</button><button class="btn buy" onclick="buy('The Hope Wins')">💳 Acheter</button>
 </div>
 
 <!-- Track 4: trk3.mp3 -->
 <div class="track" data-track="4">
-<img src="https://github.com/dbpgrok/shop02/blob/main/assets/0004.jpg" alt="Cover trk3" class="cover">
-<div>
-<h2 class="title">trk3</h2>
-<p class="artist">AI101MUSIC • Single 2026</p>
+<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0004.jpg" alt="Cover trk3" class="cover" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg==';this.alt='Fallback Cover';">
+<div><h2 class="title">trk3</h2><p class="artist">AI101MUSIC • Single 2026</p></div>
+<div id="audio-container4" style="display:none;"><div class="loading" id="loading4">🔄 Chargement sécurisé...</div><audio id="audio4" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">Votre navigateur ne supporte pas l'audio.</audio></div>
+<div class="price">€0.79</div><button class="btn play-btn" id="playBtn4" onclick="playPreview('4')">▶️ Écouter 30s</button><button class="btn buy" onclick="buy('trk3')">💳 Acheter</button>
 </div>
-<div id="audio-container4" style="display:none;">
-    <div class="loading" id="loading4">🔄 Chargement sécurisé de la pré-écoute...</div>
-    <audio id="audio4" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">
-        Votre navigateur ne supporte pas l'audio.
-    </audio>
+
+<!-- Track 5: Sebene2.mp3 -->
+<div class="track" data-track="5">
+<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0005.jpg" alt="Cover Sebene2" class="cover" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg==';this.alt='Fallback Cover';">
+<div><h2 class="title">Sebene2</h2><p class="artist">AI101MUSIC • Single 2026</p></div>
+<div id="audio-container5" style="display:none;"><div class="loading" id="loading5">🔄 Chargement sécurisé...</div><audio id="audio5" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">Votre navigateur ne supporte pas l'audio.</audio></div>
+<div class="price">€0.79</div><button class="btn play-btn" id="playBtn5" onclick="playPreview('5')">▶️ Écouter 30s</button><button class="btn buy" onclick="buy('Sebene2')">💳 Acheter</button>
 </div>
-<div class="price">€0.79</div>
-<button class="btn play-btn" id="playBtn4" onclick="playPreview('4')">▶️ Écouter 30s</button>
-<button class="btn buy" onclick="buy('trk3')">💳 Acheter</button>
+
+<!-- Track 6: Al Dogma.mp3 -->
+<div class="track" data-track="6">
+<img src="https://raw.githubusercontent.com/dbpgrok/shop02/main/assets/0006.jpg" alt="Cover Al Dogma" class="cover" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2RjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvdmVyPC90ZXh0Pjwvc3ZnPg==';this.alt='Fallback Cover';">
+<div><h2 class="title">Al Dogma</h2><p class="artist">AI101MUSIC • Single 2026</p></div>
+<div id="audio-container6" style="display:none;"><div class="loading" id="loading6">🔄 Chargement sécurisé...</div><audio id="audio6" controls preload="none" controlsList="nodownload noremoteplayback nopicture-in-picture" style="width:350px;display:none;">Votre navigateur ne supporte pas l'audio.</audio></div>
+<div class="price">€0.79</div><button class="btn play-btn" id="playBtn6" onclick="playPreview('6')">▶️ Écouter 30s</button><button class="btn buy" onclick="buy('Al Dogma')">💳 Acheter</button>
 </div>
 </main>
 <script>
-let audioBlobs = {}; // Stockage des Blobs par ID
-let currentPlayingTrack = null; // Track actuellement en lecture
-const mp3Files = ['Hamsterrad-Revolte.mp3', 'Self Care Groove.mp3', 'The Hope Wins.mp3', 'trk3.mp3'];
+let audioBlobs = {}; 
+let currentPlayingTrack = null;
+const mp3Files = ['Hamsterrad-Revolte.mp3', 'Self Care Groove.mp3', 'The Hope Wins.mp3', 'trk3.mp3', 'Sebene2.mp3', 'Al Dogma.mp3'];
 
-// Arrête TOUS les autres players + reset visuel
+// 🛑 Stop tous autres + reset
 function stopAllOthers(newTrackId) {
-    for (let i = 1; i <= 4; i++) {
-        if (i.toString() !== newTrackId) {
-            const audio = document.getElementById(`audio${i}`);
-            const trackDiv = document.querySelector(`[data-track="${i}"]`);
-            const playBtn = document.getElementById(`playBtn${i}`);
-            
-            if (audio) {
-                audio.pause();
-                audio.currentTime = 0;
-            }
-            if (trackDiv) trackDiv.classList.remove('active');
-            if (playBtn) {
-                playBtn.classList.remove('active');
-                playBtn.textContent = '▶️ Écouter 30s';
-            }
-        }
+  for(let i=1; i<=6; i++) {
+    if(i.toString() !== newTrackId) {
+      const audio = document.getElementById(`audio${i}`);
+      const trackDiv = document.querySelector(`[data-track="${i}"]`);
+      const playBtn = document.getElementById(`playBtn${i}`);
+      if(audio) { audio.pause(); audio.currentTime = 0; }
+      if(trackDiv) trackDiv.classList.remove('active');
+      if(playBtn) { playBtn.classList.remove('active'); playBtn.textContent = '▶️ Écouter 30s'; }
     }
+  }
 }
 
-// Met à jour visuel du track actif
+// 🎨 Active track visuel
 function setActiveTrack(trackId) {
-    const trackDiv = document.querySelector(`[data-track="${trackId}"]`);
-    const playBtn = document.getElementById(`playBtn${trackId}`);
-    
-    // Reset tous
-    document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.play-btn').forEach(b => b.classList.remove('active'));
-    
-    // Active le nouveau
-    if (trackDiv) trackDiv.classList.add('active');
-    if (playBtn) {
-        playBtn.classList.add('active');
-        playBtn.textContent = '⏸️ En cours...';
-    }
-    
-    currentPlayingTrack = trackId;
+  document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.play-btn').forEach(b => b.classList.remove('active'));
+  const trackDiv = document.querySelector(`[data-track="${trackId}"]`);
+  const playBtn = document.getElementById(`playBtn${trackId}`);
+  if(trackDiv) trackDiv.classList.add('active');
+  if(playBtn) { playBtn.classList.add('active'); playBtn.textContent = '⏸️ En cours...'; }
+  currentPlayingTrack = trackId;
 }
 
-// Chargement sécurisé du Blob au premier clic
+// 🔒 Load blob sécurisé
 async function loadSecurePreview(trackId) {
-    const id = parseInt(trackId);
-    const container = document.getElementById(`audio-container${trackId}`);
-    const loading = document.getElementById(`loading${trackId}`);
-    const audio = document.getElementById(`audio${trackId}`);
-    const playBtn = document.getElementById(`playBtn${trackId}`);
-    
-    if (audioBlobs[trackId]) return; // Déjà chargé
-    
-    loading.style.display = 'block';
-    playBtn.disabled = true;
-    playBtn.textContent = '🔄 Chargement...';
-    
-    try {
-        const mp3Path = `assets/${mp3Files[id - 1]}`;
-        const response = await fetch(mp3Path);
-        if (!response.ok) throw new Error('Erreur chargement');
-        
-        const arrayBuffer = await response.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
-        const blobUrl = URL.createObjectURL(blob);
-        
-        audioBlobs[trackId] = blobUrl;
-        audio.src = blobUrl;
-        audio.load();
-        
-        loading.style.display = 'none';
-        audio.style.display = 'block';
-        playBtn.disabled = false;
-        playBtn.textContent = '⏸️ En cours...';
-        
-        setTimeout(() => {
-            if (audio.paused && currentPlayingTrack === trackId) {
-                playBtn.textContent = '🔄 Rejouer 30s';
-                trackDiv.classList.remove('active');
-                playBtn.classList.remove('active');
-            }
-        }, 60000);
-        
-    } catch (error) {
-        loading.textContent = '❌ Erreur de chargement';
-        console.error('Erreur audio:', error);
-        playBtn.disabled = false;
-        playBtn.textContent = '▶️ Réessayer';
-    }
+  const audio = document.getElementById(`audio${trackId}`);
+  const loading = document.getElementById(`loading${trackId}`);
+  const playBtn = document.getElementById(`playBtn${trackId}`);
+  if(audioBlobs[trackId]) return;
+  loading.style.display = 'block'; playBtn.disabled = true; playBtn.textContent = '🔄 Chargement...';
+  try {
+    const mp3Path = `assets/${mp3Files[parseInt(trackId)-1]}`;
+    const response = await fetch(mp3Path);
+    if(!response.ok) throw new Error('Fichier absent');
+    const arrayBuffer = await response.arrayBuffer();
+    const blob = new Blob([arrayBuffer], {type: 'audio/mpeg'});
+    audioBlobs[trackId] = URL.createObjectURL(blob);
+    audio.src = audioBlobs[trackId];
+    loading.style.display = 'none'; audio.style.display = 'block';
+    playBtn.disabled = false;
+  } catch(e) {
+    loading.textContent = '❌ Erreur audio'; console.error(e);
+    playBtn.disabled = false; playBtn.textContent = '▶️ Réessayer';
+  }
 }
 
-// Lecture 30s sécurisée (avec arrêt des autres)
-function playPreview(trackId) {
-    stopAllOthers(trackId);
-    setActiveTrack(trackId);
-    
-    const audio = document.getElementById(`audio${trackId}`);
-    loadSecurePreview(trackId).then(() => {
-        audio.currentTime = 0;
-        audio.play();
-    });
+// ▶️ Play 30s
+async function playPreview(trackId) {
+  stopAllOthers(trackId); setActiveTrack(trackId);
+  const audio = document.getElementById(`audio${trackId}`);
+  await loadSecurePreview(trackId);
+  audio.currentTime = 0; audio.play();
 }
 
-// Limite 30s ULTRA-STRICT
-function setupAudioLimits(audio) {
-    audio.addEventListener('timeupdate', function() {
-        if (this.currentTime > 30) {
-            this.pause();
-            this.currentTime = 0;
-            const trackId = this.id.replace('audio', '');
-            const trackDiv = document.querySelector(`[data-track="${trackId}"]`);
-            const playBtn = document.getElementById(`playBtn${trackId}`);
-            if (trackDiv) trackDiv.classList.remove('active');
-            if (playBtn) {
-                playBtn.classList.remove('active');
-                playBtn.textContent = '🔄 Rejouer 30s';
-            }
-        }
-    });
-    
-    audio.addEventListener('play', function() {
-        const checkTime = () => {
-            if (!this.paused && this.currentTime > 30) {
-                this.pause();
-                this.currentTime = 0;
-            }
-        };
-        const timer = setInterval(checkTime, 100);
-        this._timer = timer;
-    });
-    
-    audio.addEventListener('pause', function() {
-        if (this._timer) {
-            clearInterval(this._timer);
-            this._timer = null;
-        }
-    });
-
-    // Arrêt auto si autre track sélectionné
-    audio.addEventListener('play', function() {
-        const trackId = this.id.replace('audio', '');
-        if (currentPlayingTrack && currentPlayingTrack !== trackId) {
-            this.pause();
-            this.currentTime = 0;
-        }
-    });
+// ⏱️ Limite 30s stricte par audio
+function setupAudioLimits(audioId) {
+  const audio = document.getElementById(audioId);
+  audio.addEventListener('timeupdate', () => {
+    if(audio.currentTime > 30) { audio.pause(); audio.currentTime = 0; }
+  });
+  audio.addEventListener('ended', () => { audio.currentTime = 0; });
 }
 
-// Initialisation pour TOUS les audios
-document.addEventListener('DOMContentLoaded', function() {
-    setupAudioLimits(document.getElementById('audio1'));
-    setupAudioLimits(document.getElementById('audio2'));
-    setupAudioLimits(document.getElementById('audio3'));
-    setupAudioLimits(document.getElementById('audio4'));
-    
-    // Protections anti-fuite
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('dragstart', e => e.preventDefault());
-    document.addEventListener('selectstart', e => e.preventDefault());
-    
-    ['audio1', 'audio2', 'audio3', 'audio4'].forEach(id => {
-        const audio = document.getElementById(id);
-        if (audio) {
-            audio.addEventListener('contextmenu', e => e.preventDefault());
-            audio.addEventListener('dragstart', e => e.preventDefault());
-        }
-    });
-    
-    // Anti-inspection
-    document.addEventListener('keydown', e => {
-        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'i' || e.key === 'j')) e.preventDefault();
-        if (e.key === 'F12') e.preventDefault();
-    }, false);
-});
-
+// 💳 Achat simu
 function buy(title) {
-    alert(`✅ Paiement "${title}" validé ! Lien téléchargement envoyé par email.\\n(Stripe/PayPal simulation)\\n\\n🔒 Votre fichier complet est maintenant sécurisé !`);
+  if(confirm(`Acheter "${title}" pour €0.79 ?`)) {
+    alert(`✅ "${title}" acheté ! Lien full envoyé par email.\n🔒 Sécurisé Stripe simu.`);
+  }
 }
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  ['audio1','audio2','audio3','audio4','audio5','audio6'].forEach(setupAudioLimits);
+  // Anti-fuite
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('dragstart', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if(e.ctrlKey && (e.key==='u'||e.key==='s'||e.key==='i')) e.preventDefault();
+    if(e.key==='F12') e.preventDefault();
+  }, true);
+});
 </script>
 </body>
-</html>]
+</html>
+ 
