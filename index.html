@@ -4,6 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Shop02 - Boutique Musique Sécurisée Pré-30s PRO</title>
+
+<!-- Dans <head>, AVANT ton <style> -->
+<script src="https://www.paypal.com/sdk/js?client-id=TON_CLIENT_ID_SANDBOX&currency=EUR&components=buttons&intent=capture"></script>
+
+<!-- Remplace ta fonction buy() par ça -->
+function buy(trackTitle, trackId) {
+    const orderData = { trackTitle, trackId, price: 0.79 };
+    
+       // Option 1: Solana Pay (lien QR)
+    const recipient = '6t6pLZ22wnbPSnUvBzv9ZRxVK5q7CSTXDE5LjHcQaaAs';  // Remplace par ton wallet SOL
+    const reference = 'order_' + Date.now() + '_' + trackId;  // Unique
+    const solanaLink = `solana:${recipient}?amount=0.002&label=Shop02-${trackTitle}&message=Track+completo+€0.79&reference=${reference}&memo=SHOP02_${trackTitle}`;
+    
+    const solanaUrl = `https://solana.fm/tx/create?recipient=${recipient}&amount=0.002&reference=${reference}`;  // Fallback web
+    
+    const choice = prompt(`💳 Pour "${trackTitle}" (€0.79):\n1. Ouvrir PayPal\n2. Solana Pay (0.002 SOL)\nChoisis 1 ou 2:`);
+    
+    if (choice === '2') {
+        // Enregistre l'order côté serveur pour surveiller
+        fetch('/api/solana/prepare-order', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ reference, trackTitle, trackId })
+        });
+        
+        // Ouvre wallet ou QR
+        if (navigator.userAgent.includes('Phantom') || navigator.userAgent.includes('Solflare')) {
+            window.location.href = solanaLink;
+        } else {
+            // Affiche QR ou lien
+            const qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(solanaLink)}`;
+            alert(`Solana Pay:\n${solanaLink}\n\nQR: ${qr}\n\nTon backend surveillera le paiement!`);
+        }
+    }
+}
+
+    
 <style>
 body{font-family:'Arial',sans-serif;background:linear-gradient(135deg,#f4f4f4,#e8e8e8);margin:0;padding:20px;max-width:1200px;margin:auto;box-sizing:border-box;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
 header{background:linear-gradient(135deg,#2c3e50,#34495e);color:white;text-align:center;padding:2.5rem 2rem;border-radius:20px;box-shadow:0 10px 30px rgba(44,62,80,0.3);margin-bottom:2rem;}
